@@ -41,7 +41,7 @@ public class PuertsGameFramework : ModuleRules
                 "JsEnv",
                 "Puerts",
                 "UMG",
-                "OnlineSubsystemUtils",
+                //"OnlineSubsystemUtils",
 				// ... add private dependencies that you statically link with here ...	
 			}
 			);
