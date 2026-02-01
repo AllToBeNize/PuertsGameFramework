@@ -1,0 +1,19 @@
+# === Unreal Engine Temp Files ===
+Binaries/
+Intermediate/
+DerivedDataCache/
+Saved/
+*.sln
+*.suo
+*.user
+*.db
+*.opendb
+
+# === Node.js & TypeScript ===
+node_modules/
+# dist/
+# out/
+
+# === OS Files ===
+.DS_Store
+Thumbs.db
