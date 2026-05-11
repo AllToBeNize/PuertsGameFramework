@@ -20,7 +20,7 @@ public:
 	FString RootPath = "JavaScript";
 
 	UPROPERTY(config, EditAnywhere, Category = "Default JavaScript Environment")
-	FString EntryScriptPath = "Entry.ts";
+	FString EntryScriptPath = "GameEntry";
 	
 	UPROPERTY(
 		config, EditAnywhere, Category = "Default JavaScript Environment", meta = (DisplayName = "AutoStartJsEnv", defaultValue = true))
