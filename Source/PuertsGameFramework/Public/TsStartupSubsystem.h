@@ -5,13 +5,13 @@
 #include "JsEnv.h"
 #include "CoreMinimal.h"
 #include "Subsystems/GameInstanceSubsystem.h"
-#include "TsGameEntrySubsystem.generated.h"
+#include "TsStartupSubsystem.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class PUERTSGAMEFRAMEWORK_API UTsGameEntrySubsystem : public UGameInstanceSubsystem
+class PUERTSGAMEFRAMEWORK_API UTsStartupSubsystem : public UGameInstanceSubsystem
 {
 	GENERATED_BODY()
 public:
@@ -20,7 +20,7 @@ public:
 	
 	virtual void Deinitialize() override;
 	
-	void InitGameScript();
+	void StartGameScript();
 
 private:
 	TSharedPtr<puerts::FJsEnv> GameScript;	

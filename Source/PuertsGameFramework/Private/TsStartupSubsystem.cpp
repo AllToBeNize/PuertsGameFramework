@@ -1,18 +1,18 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "TsGameEntrySubsystem.h"
+#include "TsStartupSubsystem.h"
 
 #include "TsSettings.h"
 
 
-void UTsGameEntrySubsystem::Initialize(FSubsystemCollectionBase& Collection)
+void UTsStartupSubsystem::Initialize(FSubsystemCollectionBase& Collection)
 {
 	Super::Initialize(Collection);
-	InitGameScript();
+	StartGameScript();
 }
 
-void UTsGameEntrySubsystem::Deinitialize()
+void UTsStartupSubsystem::Deinitialize()
 {
 	if (GameScript.IsValid())
 	{
@@ -21,7 +21,7 @@ void UTsGameEntrySubsystem::Deinitialize()
 	Super::Deinitialize();
 }
 
-void UTsGameEntrySubsystem::InitGameScript()
+void UTsStartupSubsystem::StartGameScript()
 {
 	if (GameScript.IsValid())
 	{
@@ -49,7 +49,7 @@ void UTsGameEntrySubsystem::InitGameScript()
 		}
 		
 		TArray<TPair<FString, UObject*>> Arguments;
-		Arguments.Add(TPair<FString, UObject*>(TEXT("GameInstance"), this));
+		Arguments.Add(TPair<FString, UObject*>(TEXT("GameInstance"), GetGameInstance()));
 		
 		GameScript->Start(Settings.EntryScriptPath, Arguments);
 	}
