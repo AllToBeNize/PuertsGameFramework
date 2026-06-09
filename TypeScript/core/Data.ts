@@ -1,4 +1,4 @@
-import * as UE from "ue"
+import UE = require("ue")
 import { Behavior } from "./Behavior"
 
 export type UeClassType<TOwner extends UE.Object = UE.Object> = {

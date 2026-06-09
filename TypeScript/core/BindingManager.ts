@@ -1,11 +1,9 @@
-import * as UE from "ue"
+import UE = require("ue")
 import { Behavior } from "./Behavior"
 import { UClassToBehavior, UObjectToBehavior } from "./Data"
 import { GetWorldContext } from "./GlobalUEObject"
 import { Singleton } from "./Singleton"
 
-let gameInstance = GetWorldContext()
-console.log(`xyyy gameInstace: ${gameInstance.GetClass().GetName()}`)
 
 let bindingSubsystem = UE.SubsystemBlueprintLibrary.GetGameInstanceSubsystem(GetWorldContext(),UE.TsObjectBindingSubsystem.StaticClass()) as UE.TsObjectBindingSubsystem
 console.log(`hello!! binding: ${bindingSubsystem}`)
@@ -60,16 +58,15 @@ export class BindingManager extends Singleton<BindingManager>() {
     private createBehaviors(object: UE.Object): Behavior[] {
         const behaviors: Behavior[] = []
 
-        for (const [ueClass, behaviorClasses] of UClassToBehavior) {
-            if (!object.IsA(ueClass)) {
-                continue
-            }
+        const behaviorClasses = UClassToBehavior.get(object.GetClass())
+        if (!behaviorClasses) {
+            return behaviors
+        }
 
-            for (const behaviorClass of behaviorClasses) {
-                const behavior = new behaviorClass()
-                behavior.bind(object)
-                behaviors.push(behavior)
-            }
+        for (const behaviorClass of behaviorClasses) {
+            const behavior = new behaviorClass()
+            behavior.bind(object)
+            behaviors.push(behavior)
         }
 
         return behaviors

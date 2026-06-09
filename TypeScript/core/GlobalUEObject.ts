@@ -1,5 +1,5 @@
 import { argv } from "puerts"
-import * as UE from "ue"
+import UE = require("ue")
 
 let gameInstance = argv.getByName("GameInstance") as UE.GameInstance;
 

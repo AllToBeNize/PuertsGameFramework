@@ -1,4 +1,4 @@
-import * as UE from "ue"
+import UE = require("ue")
 
 export abstract class Behavior<TOwner extends UE.Object = UE.Object> {
     readonly owner!: TOwner
