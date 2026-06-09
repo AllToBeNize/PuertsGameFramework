@@ -36,6 +36,9 @@ public class PuertsGameFramework : ModuleRules
 		PrivateDependencyModuleNames.AddRange(
 			new string[]
 			{
+				"Core",
+				"CoreUObject",
+				"Engine",
 				"Slate",
 				"SlateCore",
                 "JsEnv",

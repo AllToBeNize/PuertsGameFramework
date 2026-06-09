@@ -1,3 +1,5 @@
-import * as UE from "ue"
+import "../game"
+import { GameEntry } from "./GameEntry"
 
-console.log("hello!")
+const gameEntry = new GameEntry()
+gameEntry.start()
