@@ -1,17 +1,17 @@
-export function TsSingleton<T>() {
-    class TsSingletonBase {
-        private static instance: TsSingletonBase | null = null
+export function Singleton<T>() {
+    class SingletonBase {
+        private static instance: SingletonBase | null = null
 
         private initialized = false
 
         protected constructor() {}
 
         static get Instance(): T {
-            if (!TsSingletonBase.instance) {
-                TsSingletonBase.instance = new this()
+            if (!SingletonBase.instance) {
+                SingletonBase.instance = new this()
             }
 
-            return TsSingletonBase.instance as T
+            return SingletonBase.instance as T
         }
 
         get isInitialized(): boolean {
@@ -45,5 +45,5 @@ export function TsSingleton<T>() {
         protected onCleanup(): void {}
     }
 
-    return TsSingletonBase
+    return SingletonBase
 }

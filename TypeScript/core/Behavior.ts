@@ -1,6 +1,6 @@
 import * as UE from "ue"
 
-export abstract class TsBehavior<TOwner extends UE.Object = UE.Object> {
+export abstract class Behavior<TOwner extends UE.Object = UE.Object> {
     readonly owner!: TOwner
 
     bind(owner: TOwner): void {

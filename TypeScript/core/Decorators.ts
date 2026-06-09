@@ -1,20 +1,20 @@
 import * as UE from "ue"
 import { blueprint } from "puerts"
-import { UeClassBindingTarget, UClassToTsBehavior, TsBehaviorConstructor, UeClassType } from "./Data"
+import { UClassToBehavior, BehaviorConstructor, UeClassType } from "./Data"
 
 const LoadedBlueprintClassByPath = new Map<string, UE.Class>()
 
-export function bind<TOwner extends UE.Object>(ueClassType: UeClassBindingTarget<TOwner>): (behaviorClass: TsBehaviorConstructor<TOwner>) => void
-export function bind<TOwner extends UE.Object>(ueClassType: UeClassBindingTarget<TOwner>) {
-    return function (behaviorClass: TsBehaviorConstructor<TOwner>): void {
+export function bind<TOwner extends UE.Object>(ueClassType: UeClassType<TOwner>): (behaviorClass: BehaviorConstructor<TOwner>) => void
+export function bind<TOwner extends UE.Object>(ueClassType: UeClassType<TOwner>) {
+    return function (behaviorClass: BehaviorConstructor<TOwner>): void {
         const ueClass = resolveUeClass(ueClassType)
-        const behaviorClasses = UClassToTsBehavior.get(ueClass) ?? []
-        behaviorClasses.push(behaviorClass as TsBehaviorConstructor)
-        UClassToTsBehavior.set(ueClass, behaviorClasses)
+        const behaviorClasses = UClassToBehavior.get(ueClass) ?? []
+        behaviorClasses.push(behaviorClass as BehaviorConstructor)
+        UClassToBehavior.set(ueClass, behaviorClasses)
     }
 }
 
-function resolveUeClass<TOwner extends UE.Object>(ueClassType: UeClassBindingTarget<TOwner>): UE.Class {
+function resolveUeClass<TOwner extends UE.Object>(ueClassType: UeClassType<TOwner>): UE.Class {
     const blueprintPath = getBlueprintPath(ueClassType)
     if (blueprintPath) {
         const cachedClass = LoadedBlueprintClassByPath.get(blueprintPath)
@@ -67,7 +67,7 @@ function getBlueprintPath(ueClassType: unknown): string | undefined {
     return `/${packagePath}.${className}`
 }
 
-function loadBlueprintClass(ueClassType: UeClassBindingTarget): LoadedBlueprintClass | undefined {
+function loadBlueprintClass(ueClassType: UeClassType): LoadedBlueprintClass | undefined {
     const unloadedClass = ueClassType as RuntimeBlueprintClass
     const path = Object.getOwnPropertyDescriptor(unloadedClass, "__path")?.value as string | undefined
     const parent = Object.getOwnPropertyDescriptor(unloadedClass, "__parent")?.value as Record<string, RuntimeBlueprintClass> | undefined

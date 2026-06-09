@@ -1,8 +1,8 @@
 import * as UE from "ue"
-import { TsBehavior } from "./TsBehavior"
-import { UClassToTsBehavior, UObjectToTsBehavior } from "./Data"
+import { Behavior } from "./Behavior"
+import { UClassToBehavior, UObjectToBehavior } from "./Data"
 import { GetWorldContext } from "./GlobalUEObject"
-import { TsSingleton } from "./TsSingleton"
+import { Singleton } from "./Singleton"
 
 let gameInstance = GetWorldContext()
 console.log(`xyyy gameInstace: ${gameInstance.GetClass().GetName()}`)
@@ -10,7 +10,7 @@ console.log(`xyyy gameInstace: ${gameInstance.GetClass().GetName()}`)
 let bindingSubsystem = UE.SubsystemBlueprintLibrary.GetGameInstanceSubsystem(GetWorldContext(),UE.TsObjectBindingSubsystem.StaticClass()) as UE.TsObjectBindingSubsystem
 console.log(`hello!! binding: ${bindingSubsystem}`)
 
-export class BindingManager extends TsSingleton<BindingManager>() {
+export class BindingManager extends Singleton<BindingManager>() {
     protected onInit(): void {
         if (!bindingSubsystem) {
             console.warn("TsObjectBindingSubsystem is not available.")
@@ -36,8 +36,8 @@ export class BindingManager extends TsSingleton<BindingManager>() {
             return
         }
 
-        const existingBehaviors = UObjectToTsBehavior.get(object) ?? []
-        UObjectToTsBehavior.set(object, existingBehaviors.concat(behaviors))
+        const existingBehaviors = UObjectToBehavior.get(object) ?? []
+        UObjectToBehavior.set(object, existingBehaviors.concat(behaviors))
     }
 
     public unbindObject(object?: UE.Object | null): void {
@@ -45,7 +45,7 @@ export class BindingManager extends TsSingleton<BindingManager>() {
             return
         }
 
-        const behaviors = UObjectToTsBehavior.get(object)
+        const behaviors = UObjectToBehavior.get(object)
         if (!behaviors) {
             return
         }
@@ -54,13 +54,13 @@ export class BindingManager extends TsSingleton<BindingManager>() {
             behaviors[i].unbind()
         }
 
-        UObjectToTsBehavior.delete(object)
+        UObjectToBehavior.delete(object)
     }
 
-    private createBehaviors(object: UE.Object): TsBehavior[] {
-        const behaviors: TsBehavior[] = []
+    private createBehaviors(object: UE.Object): Behavior[] {
+        const behaviors: Behavior[] = []
 
-        for (const [ueClass, behaviorClasses] of UClassToTsBehavior) {
+        for (const [ueClass, behaviorClasses] of UClassToBehavior) {
             if (!object.IsA(ueClass)) {
                 continue
             }
