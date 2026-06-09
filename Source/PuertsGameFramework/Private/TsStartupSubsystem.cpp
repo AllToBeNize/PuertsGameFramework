@@ -40,7 +40,7 @@ void UTsStartupSubsystem::StartGameScript()
 			Settings.DebugPort);
 			if (Settings.bWaitDebugger)
 			{
-				GameScript->WaitDebugger(Settings.DebugPort);
+				GameScript->WaitDebugger(Settings.WaitDebuggerTimeout);
 			}
 		}
 		else
