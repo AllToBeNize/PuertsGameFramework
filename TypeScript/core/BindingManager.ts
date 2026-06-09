@@ -1,17 +1,20 @@
 import UE = require("ue")
 import { Behavior } from "./Behavior"
+import { BehaviorManager } from "./BehaviorManager"
 import { UClassToBehavior, UObjectToBehavior } from "./Data"
 import { GetWorldContext } from "./GlobalUEObject"
+import { error } from "./Log"
 import { Singleton } from "./Singleton"
 
-
-let bindingSubsystem = UE.SubsystemBlueprintLibrary.GetGameInstanceSubsystem(GetWorldContext(),UE.TsObjectBindingSubsystem.StaticClass()) as UE.TsObjectBindingSubsystem
-console.log(`hello!! binding: ${bindingSubsystem}`)
+let bindingSubsystem = UE.SubsystemBlueprintLibrary.GetGameInstanceSubsystem(
+    GetWorldContext(),
+    UE.TsObjectBindingSubsystem.StaticClass(),
+) as UE.TsObjectBindingSubsystem
 
 export class BindingManager extends Singleton<BindingManager>() {
     protected onInit(): void {
         if (!bindingSubsystem) {
-            console.warn("TsObjectBindingSubsystem is not available.")
+            error("TsObjectBindingSubsystem is not available.")
             return
         }
 
@@ -29,13 +32,14 @@ export class BindingManager extends Singleton<BindingManager>() {
             return
         }
 
-        const behaviors = this.createBehaviors(object)
-        if (behaviors.length <= 0) {
+        const behaviorClassList = UClassToBehavior.get(object.GetClass())
+        if (!behaviorClassList) {
             return
         }
 
-        const existingBehaviors = UObjectToBehavior.get(object) ?? []
-        UObjectToBehavior.set(object, existingBehaviors.concat(behaviors))
+        behaviorClassList.forEach((behaviorClass) => {
+            BehaviorManager.Instance.createBehavior(object, behaviorClass)
+        })
     }
 
     public unbindObject(object?: UE.Object | null): void {
@@ -48,27 +52,10 @@ export class BindingManager extends Singleton<BindingManager>() {
             return
         }
 
-        for (let i = behaviors.length - 1; i >= 0; --i) {
-            behaviors[i].unbind()
-        }
+        behaviors.forEach((behavior) => {
+            behavior.unbind()
+        })
 
         UObjectToBehavior.delete(object)
-    }
-
-    private createBehaviors(object: UE.Object): Behavior[] {
-        const behaviors: Behavior[] = []
-
-        const behaviorClasses = UClassToBehavior.get(object.GetClass())
-        if (!behaviorClasses) {
-            return behaviors
-        }
-
-        for (const behaviorClass of behaviorClasses) {
-            const behavior = new behaviorClass()
-            behavior.bind(object)
-            behaviors.push(behavior)
-        }
-
-        return behaviors
     }
 }
