@@ -7,6 +7,10 @@ const LoadedBlueprintClassByPath = new Map<string, UE.Class>()
 export function bind<TOwner extends UE.Object>(ueClassType: UeClassType<TOwner>): (behaviorClass: BehaviorConstructor<TOwner>) => void
 export function bind<TOwner extends UE.Object>(ueClassType: UeClassType<TOwner>) {
     return function (behaviorClass: BehaviorConstructor<TOwner>): void {
+        if (BehaviorNameToConstructor.has(behaviorClass.name)) {
+            throw new Error(`[bind] Duplicate behavior name: ${behaviorClass.name}`)
+        }
+
         BehaviorNameToConstructor.set(behaviorClass.name, behaviorClass as BehaviorConstructor)
 
         const ueClass = resolveUeClass(ueClassType)
