@@ -1,5 +1,4 @@
 import UE = require("ue")
-import { Behavior } from "./Behavior"
 import { BehaviorManager } from "./BehaviorManager"
 import { UClassToBehavior, UObjectToBehavior } from "./Data"
 import { GetWorldContext } from "./GlobalUEObject"
