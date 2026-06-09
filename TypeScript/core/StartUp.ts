@@ -1,3 +1,5 @@
+import "./BlueprintNamespaces"
+import "./index"
 import "../game"
 import { GameEntry } from "./GameEntry"
 
