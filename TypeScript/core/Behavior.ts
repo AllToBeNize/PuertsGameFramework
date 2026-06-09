@@ -1,11 +1,11 @@
 import UE = require("ue")
 
 export abstract class Behavior<TOwner extends UE.Object = UE.Object> {
-    readonly owner!: TOwner
+    readonly u_object!: TOwner
 
-    bind(owner: TOwner): void {
-        Object.defineProperty(this, "owner", {
-            value: owner,
+    public bind(u_object: TOwner): void {
+        Object.defineProperty(this, "u_object", {
+            value: u_object,
             writable: false,
             configurable: true,
         })
@@ -13,10 +13,10 @@ export abstract class Behavior<TOwner extends UE.Object = UE.Object> {
         this.onBind?.()
     }
 
-    unbind(): void {
+    public unbind(): void {
         this.onUnbind?.()
     }
 
-    onBind?(): void
-    onUnbind?(): void
+    protected onBind?(): void
+    protected onUnbind?(): void
 }
