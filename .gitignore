@@ -3,6 +3,7 @@ Binaries/
 Intermediate/
 DerivedDataCache/
 Saved/
+obj/
 *.sln
 *.suo
 *.user
@@ -13,6 +14,12 @@ Saved/
 node_modules/
 # dist/
 # out/
+
+# === Plugins not included in this repository ===
+UnrealClientProtocol/
+
+# === Large third-party binaries ===
+Puerts/ThirdParty/
 
 # === OS Files ===
 .DS_Store
