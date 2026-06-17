@@ -11,5 +11,5 @@ export function error(message?: unknown, ...optionalParams: unknown[]): void {
 }
 
 export function trace(message?: unknown, ...optionalParams: unknown[]): void {
-    console.trace(message, ...optionalParams)
+    console.log(message, ...optionalParams, new Error("Trace").stack)
 }
