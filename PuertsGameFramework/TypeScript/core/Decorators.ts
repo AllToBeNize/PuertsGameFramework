@@ -4,23 +4,23 @@ import { BehaviourNameToConstructor, UClassToBehaviour, BehaviourConstructor, Ue
 
 const LoadedBlueprintClassByPath = new Map<string, UE.Class>()
 
-export function bind<TOwner extends UE.Object>(ueClassType: UeClassType<TOwner>): (behaviourClass: BehaviourConstructor<TOwner>) => void
-export function bind<TOwner extends UE.Object>(ueClassType: UeClassType<TOwner>) {
-    return function (behaviourClass: BehaviourConstructor<TOwner>): void {
+export function bind(ueClassType: UeClassType): (behaviourClass: BehaviourConstructor) => void
+export function bind(ueClassType: UeClassType) {
+    return function (behaviourClass: BehaviourConstructor): void {
         if (BehaviourNameToConstructor.has(behaviourClass.name)) {
             throw new Error(`[bind] Duplicate behaviour name: ${behaviourClass.name}`)
         }
 
-        BehaviourNameToConstructor.set(behaviourClass.name, behaviourClass as BehaviourConstructor)
+        BehaviourNameToConstructor.set(behaviourClass.name, behaviourClass)
 
         const ueClass = resolveUeClass(ueClassType)
         const behaviourClasses = UClassToBehaviour.get(ueClass) ?? []
-        behaviourClasses.push(behaviourClass as BehaviourConstructor)
+        behaviourClasses.push(behaviourClass)
         UClassToBehaviour.set(ueClass, behaviourClasses)
     }
 }
 
-function resolveUeClass<TOwner extends UE.Object>(ueClassType: UeClassType<TOwner>): UE.Class {
+function resolveUeClass(ueClassType: UeClassType): UE.Class {
     const blueprintPath = getBlueprintPath(ueClassType)
     if (blueprintPath) {
         const cachedClass = LoadedBlueprintClassByPath.get(blueprintPath)

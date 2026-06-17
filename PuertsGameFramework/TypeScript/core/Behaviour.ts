@@ -1,9 +1,9 @@
 import UE = require("ue")
 
-export abstract class Behaviour<TOwner extends UE.Object = UE.Object> {
-    readonly u_object!: TOwner
+export abstract class Behaviour {
+    readonly u_object!: UE.Object
 
-    public bind(u_object: TOwner): void {
+    public bind(u_object: UE.Object): void {
         Object.defineProperty(this, "u_object", {
             value: u_object,
             writable: false,

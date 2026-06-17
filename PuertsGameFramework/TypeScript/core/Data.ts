@@ -1,11 +1,11 @@
 import UE = require("ue")
 import { Behaviour } from "./Behaviour"
 
-export type UeClassType<_TOwner extends UE.Object = UE.Object> = {
+export type UeClassType = {
     StaticClass(): UE.Class
 }
 
-export type BehaviourConstructor<TOwner extends UE.Object = UE.Object> = new () => Behaviour<TOwner>
+export type BehaviourConstructor = new () => Behaviour
 
 export const BehaviourNameToConstructor = new Map<string, BehaviourConstructor>()
 export const UClassToBehaviour = new Map<UE.Class, BehaviourConstructor[]>()
