@@ -1,2 +1,2 @@
-import "./TestActorBehavior"
-import "./TestActorBehavior_Child"
+import "./TestActorBehaviour"
+import "./TestActorBehaviour_Child"

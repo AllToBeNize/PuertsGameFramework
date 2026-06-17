@@ -1,1 +1,1 @@
-import "./CreateBehaviorsComponent"
+import "./CreateBehavioursComponent"

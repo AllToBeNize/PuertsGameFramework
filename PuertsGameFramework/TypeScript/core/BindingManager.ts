@@ -1,11 +1,11 @@
 import UE = require("ue")
-import { BehaviorManager } from "./BehaviorManager"
-import { UClassToBehavior, UObjectToBehavior } from "./Data"
+import { BehaviourManager } from "./BehaviourManager"
+import { UClassToBehaviour, UObjectToBehaviour } from "./Data"
 import { GetWorldContext } from "./GlobalUEObject"
 import { error } from "./Log"
 import { Singleton } from "./Singleton"
 
-let bindingSubsystem = UE.SubsystemBlueprintLibrary.GetGameInstanceSubsystem(
+const bindingSubsystem = UE.SubsystemBlueprintLibrary.GetGameInstanceSubsystem(
     GetWorldContext(),
     UE.TsObjectBindingSubsystem.StaticClass(),
 ) as UE.TsObjectBindingSubsystem
@@ -31,13 +31,13 @@ export class BindingManager extends Singleton<BindingManager>() {
             return
         }
 
-        const behaviorClassList = UClassToBehavior.get(object.GetClass())
-        if (!behaviorClassList) {
+        const behaviourClassList = UClassToBehaviour.get(object.GetClass())
+        if (!behaviourClassList) {
             return
         }
 
-        behaviorClassList.forEach((behaviorClass) => {
-            BehaviorManager.Instance.createBehavior(object, behaviorClass)
+        behaviourClassList.forEach((behaviourClass) => {
+            BehaviourManager.Instance.createBehaviour(object, behaviourClass)
         })
     }
 
@@ -46,15 +46,15 @@ export class BindingManager extends Singleton<BindingManager>() {
             return
         }
 
-        const behaviors = UObjectToBehavior.get(object)
-        if (!behaviors) {
+        const behaviours = UObjectToBehaviour.get(object)
+        if (!behaviours) {
             return
         }
 
-        behaviors.forEach((behavior) => {
-            behavior.unbind()
+        behaviours.forEach((behaviour) => {
+            behaviour.unbind()
         })
 
-        UObjectToBehavior.delete(object)
+        UObjectToBehaviour.delete(object)
     }
 }

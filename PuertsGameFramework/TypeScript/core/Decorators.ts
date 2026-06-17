@@ -1,22 +1,22 @@
 import UE = require("ue")
 import { blueprint } from "puerts"
-import { BehaviorNameToConstructor, UClassToBehavior, BehaviorConstructor, UeClassType } from "./Data"
+import { BehaviourNameToConstructor, UClassToBehaviour, BehaviourConstructor, UeClassType } from "./Data"
 
 const LoadedBlueprintClassByPath = new Map<string, UE.Class>()
 
-export function bind<TOwner extends UE.Object>(ueClassType: UeClassType<TOwner>): (behaviorClass: BehaviorConstructor<TOwner>) => void
+export function bind<TOwner extends UE.Object>(ueClassType: UeClassType<TOwner>): (behaviourClass: BehaviourConstructor<TOwner>) => void
 export function bind<TOwner extends UE.Object>(ueClassType: UeClassType<TOwner>) {
-    return function (behaviorClass: BehaviorConstructor<TOwner>): void {
-        if (BehaviorNameToConstructor.has(behaviorClass.name)) {
-            throw new Error(`[bind] Duplicate behavior name: ${behaviorClass.name}`)
+    return function (behaviourClass: BehaviourConstructor<TOwner>): void {
+        if (BehaviourNameToConstructor.has(behaviourClass.name)) {
+            throw new Error(`[bind] Duplicate behaviour name: ${behaviourClass.name}`)
         }
 
-        BehaviorNameToConstructor.set(behaviorClass.name, behaviorClass as BehaviorConstructor)
+        BehaviourNameToConstructor.set(behaviourClass.name, behaviourClass as BehaviourConstructor)
 
         const ueClass = resolveUeClass(ueClassType)
-        const behaviorClasses = UClassToBehavior.get(ueClass) ?? []
-        behaviorClasses.push(behaviorClass as BehaviorConstructor)
-        UClassToBehavior.set(ueClass, behaviorClasses)
+        const behaviourClasses = UClassToBehaviour.get(ueClass) ?? []
+        behaviourClasses.push(behaviourClass as BehaviourConstructor)
+        UClassToBehaviour.set(ueClass, behaviourClasses)
     }
 }
 
