@@ -1,7 +1,7 @@
 import UE = require("ue")
 import { Behaviour } from "./Behaviour"
 import { BehaviourConstructor, BehaviourNameToConstructor, UObjectToBehaviour } from "./Data"
-import { warning } from "./Log"
+import { error } from "./Log"
 import { Singleton } from "./Singleton"
 import { setMap } from "./Utility"
 
@@ -16,7 +16,7 @@ export class BehaviourManager extends Singleton<BehaviourManager>() {
     public createBehaviourByName(object: UE.Object, behaviourName: string): Behaviour | undefined {
         const behaviourClass = BehaviourNameToConstructor.get(behaviourName)
         if (!behaviourClass) {
-            warning(`[BehaviourManager] Behaviour is not registered: ${behaviourName}`)
+            error(`[BehaviourManager] Behaviour is not registered: ${behaviourName}`)
             return undefined
         }
 
