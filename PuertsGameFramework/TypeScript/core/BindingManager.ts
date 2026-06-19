@@ -1,19 +1,19 @@
 import UE = require("ue")
 import { BehaviourManager } from "./BehaviourManager"
+import { BehaviourSingleton } from "./BehaviourSingleton"
 import { UClassToBehaviour, UObjectToBehaviour } from "./Data"
 import { GetWorldContext } from "./GlobalUEObject"
-import { error } from "./Log"
-import { Singleton } from "./Singleton"
+import { trace } from "./Log"
 
 const bindingSubsystem = UE.SubsystemBlueprintLibrary.GetGameInstanceSubsystem(
     GetWorldContext(),
     UE.TsObjectBindingSubsystem.StaticClass(),
 ) as UE.TsObjectBindingSubsystem
 
-export class BindingManager extends Singleton<BindingManager>() {
+export class BindingManager extends BehaviourSingleton<BindingManager>() {
     protected onInit(): void {
         if (!bindingSubsystem) {
-            error("TsObjectBindingSubsystem is not available.")
+            trace("TsObjectBindingSubsystem is not available.")
             return
         }
 
