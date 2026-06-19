@@ -1,4 +1,5 @@
 import UE = require("ue")
+// import * as UE from "ue"
 import { BehaviourManager } from "./BehaviourManager"
 import { BehaviourSingleton } from "./BehaviourSingleton"
 import { UClassToBehaviour, UObjectToBehaviour } from "./Data"
