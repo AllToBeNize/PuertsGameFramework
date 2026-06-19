@@ -1,11 +1,11 @@
 import UE = require("ue")
 import { blueprint } from "puerts"
-import { BehaviourNameToConstructor, UClassToBehaviour, BehaviourConstructor, UeClassType } from "./Data"
+import { BehaviourNameToConstructor, UClassToBehaviour, BehaviourConstructor } from "./Data"
 
 const LoadedBlueprintClassByPath = new Map<string, UE.Class>()
 
-export function bind(ueClassType: UeClassType): (behaviourClass: BehaviourConstructor) => void
-export function bind(ueClassType: UeClassType) {
+export function bind(ueClassType: typeof UE.Object): (behaviourClass: BehaviourConstructor) => void
+export function bind(ueClassType: typeof UE.Object) {
     return function (behaviourClass: BehaviourConstructor): void {
         if (BehaviourNameToConstructor.has(behaviourClass.name)) {
             throw new Error(`[bind] Duplicate behaviour name: ${behaviourClass.name}`)
@@ -20,7 +20,7 @@ export function bind(ueClassType: UeClassType) {
     }
 }
 
-function resolveUeClass(ueClassType: UeClassType): UE.Class {
+function resolveUeClass(ueClassType: typeof UE.Object): UE.Class {
     const blueprintPath = getBlueprintPath(ueClassType)
     if (blueprintPath) {
         const cachedClass = LoadedBlueprintClassByPath.get(blueprintPath)
@@ -73,7 +73,7 @@ function getBlueprintPath(ueClassType: unknown): string | undefined {
     return `/${packagePath}.${className}`
 }
 
-function loadBlueprintClass(ueClassType: UeClassType): LoadedBlueprintClass | undefined {
+function loadBlueprintClass(ueClassType: typeof UE.Object): LoadedBlueprintClass | undefined {
     const unloadedClass = ueClassType as RuntimeBlueprintClass
     const path = Object.getOwnPropertyDescriptor(unloadedClass, "__path")?.value as string | undefined
     const parent = Object.getOwnPropertyDescriptor(unloadedClass, "__parent")?.value as Record<string, RuntimeBlueprintClass> | undefined

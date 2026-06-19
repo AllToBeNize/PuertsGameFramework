@@ -1,10 +1,6 @@
 import UE = require("ue")
 import { Behaviour } from "./Behaviour"
 
-export type UeClassType = {
-    StaticClass(): UE.Class
-}
-
 export type BehaviourConstructor = new () => Behaviour
 
 export const BehaviourNameToConstructor = new Map<string, BehaviourConstructor>()
