@@ -1,15 +1,10 @@
 import UE = require("ue")
 
 export abstract class Behaviour {
-    readonly u_object!: UE.Object
+    public u_object: UE.Object | null = null
 
     public bind(u_object: UE.Object): void {
-        Object.defineProperty(this, "u_object", {
-            value: u_object,
-            writable: false,
-            configurable: true,
-        })
-
+        this.u_object = u_object
         this.onBind?.()
     }
 
