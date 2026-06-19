@@ -1,4 +1,4 @@
-import UE = require("ue")
+import * as UE from "ue"
 import { bind } from "../../core/Decorators"
 import { Behaviour } from "../../core/Behaviour"
 import { log } from "../../core/Log"

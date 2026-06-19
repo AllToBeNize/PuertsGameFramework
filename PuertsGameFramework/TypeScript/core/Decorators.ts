@@ -1,4 +1,4 @@
-import UE = require("ue")
+import * as UE from "ue"
 import { blueprint } from "puerts"
 import { BehaviourNameToConstructor, UClassToBehaviour, BehaviourConstructor } from "./Data"
 import { setMap } from "./Utility"

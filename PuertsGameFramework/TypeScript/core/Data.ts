@@ -1,4 +1,4 @@
-import UE = require("ue")
+import * as UE from "ue"
 import { Behaviour } from "./Behaviour"
 
 export type BehaviourConstructor = new () => Behaviour

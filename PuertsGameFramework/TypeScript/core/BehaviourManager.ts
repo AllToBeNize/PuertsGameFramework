@@ -1,4 +1,4 @@
-import UE = require("ue")
+import * as UE from "ue"
 import { Behaviour } from "./Behaviour"
 import { BehaviourSingleton } from "./BehaviourSingleton"
 import { BehaviourConstructor, BehaviourNameToConstructor, UObjectToBehaviour } from "./Data"

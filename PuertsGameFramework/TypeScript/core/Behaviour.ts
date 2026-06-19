@@ -1,4 +1,4 @@
-import UE = require("ue")
+import * as UE from "ue"
 
 export abstract class Behaviour {
     public u_object: UE.Object | null = null
